@@ -1,0 +1,10 @@
+version: "3"
+services:
+  node-app:
+    restart: "unless-stopped"
+    build: .
+    ports:
+      - "4001:8081"
+    volumes:
+      - /usr/app/node_modules
+      #- .:/usr/app

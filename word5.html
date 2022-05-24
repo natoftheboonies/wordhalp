@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cheat To Win!!!</title>
+  </head>
+  <body>
+    <form id="game">
+      <h1>What do you know?</h1>
+      <div>
+        <label for="known1">known:</label>
+        <input name="known1" size="1" maxlength="1" />
+        <input name="known2" size="1" maxlength="1" />
+        <input name="known3" size="1" maxlength="1" />
+        <input name="known4" size="1" maxlength="1" />
+        <input name="known5" size="1" maxlength="1" />
+      </div>
+
+      <div>
+        <label for="include">include</label>
+        <input name="include" size="15" />
+      </div>
+      <div>
+        <label for="exclude">exclude</label>
+
+        <input name="exclude" size="15" />
+      </div>
+      <div>
+        <button>halp!</button>
+      </div>
+    </form>
+    <ul id="results"></ul>
+    <script>
+      document.getElementById("game").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const theForm = event.target;
+        const known = [];
+        known.push(theForm.known1.value);
+        known.push(theForm.known2.value);
+        known.push(theForm.known3.value);
+        known.push(theForm.known4.value);
+        known.push(theForm.known5.value);
+        const game = {
+          known,
+          include: theForm.include.value.split(""),
+          exclude: theForm.exclude.value.split(""),
+        };
+        console.log(JSON.stringify(game));
+        fetch("/api", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(game),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const results = document.getElementById("results");
+            results.innerHTML = "";
+            data.forEach((word) =>
+              results.insertAdjacentHTML("beforeend", `<li>${word}</li>`)
+            );
+            console.log("Request complete! response:'", data);
+          })
+          .catch((err) => console.error(err));
+      });
+    </script>
+  </body>
+</html>
