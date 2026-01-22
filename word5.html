@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
     <form id="game">
       <h1>What do you know?</h1>
       <div>
-        <label for="known1">known:</label>
+        <label for="known1">green:</label>
         <input name="known1" size="1" maxlength="1" />
         <input name="known2" size="1" maxlength="1" />
         <input name="known3" size="1" maxlength="1" />
@@ -29,6 +29,7 @@
       </div>
       <div>
         <button>halp!</button>
+        <input type="reset" value="reset" />
       </div>
     </form>
     <ul id="results"></ul>
@@ -61,7 +62,7 @@
             const results = document.getElementById("results");
             results.innerHTML = "";
             data.forEach((word) =>
-              results.insertAdjacentHTML("beforeend", `<li>${word}</li>`)
+              results.insertAdjacentHTML("beforeend", `<li>${word}</li>`),
             );
             console.log("Request complete! response:'", data);
           })
